@@ -1,0 +1,30 @@
+.title {
+    text-align: center;
+}
+
+.galleryContainer {
+    display: grid;
+}
+
+.search {
+    box-sizing: content-box;
+    font-size: 2em;
+    text-align: center;
+    margin: 1em auto;
+    border-radius: 8px; 
+    border-width: 8px;
+    border-color: cyan;
+    background-color: aquamarine;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 auto;
+}
+
+@media (max-width: 1000px){
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Video extends Component {
-    render() {
-        return (
-            <div>
-                <video src={this.props.url} autoPlay loop></video>
-            </div>
-        );
-    }
+  render() {
+    return <video src={this.props.url} autoPlay loop className="video" />;
+  }
 }
 
 export default Video;

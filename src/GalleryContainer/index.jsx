@@ -48,14 +48,14 @@ class GalleryContainer extends Component {
 
   render() {      
     return (
-      <div>
+      <section className="galleryContainer">
         <Search onchange={this.handleInput} />
         {this.state.gifs.length ? (
           <Gallery gifs={this.state.gifs} />
         ) : (
           <div>"Loading..."</div>
         )}
-      </div>
+      </section>
     );
   }
 }

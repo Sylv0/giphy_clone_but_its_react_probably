@@ -1,44 +1,63 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
+import Search from "./Search";
 import Gallery from "./Gallery";
 
 class GalleryContainer extends Component {
+  last_search = "";
 
-    state = {
-        apiKey: "LouXV5IDYNZ3ozPSjsH3aEvFeUZHB68N",
-        gifs: [],
-        search: "React.js"
-    }
+  timeout = null;
 
-    componentDidMount(){
-        this.getGifs();
-    }
+  state = {
+    apiKey: "LouXV5IDYNZ3ozPSjsH3aEvFeUZHB68N",
+    gifs: [],
+    search: ""
+  };
 
-    componentDidUpdate() {
-        console.log(this.state.search);
-        // this.getGifs();
-    }
+  componentDidMount() {
+    this.getGifs();
+  }
 
-    getGifs = () => {
-        const api = `http://api.giphy.com/v1/gifs/search?q=${this.state.search}&api_key=${this.state.apiKey}&limit=12`;
+  componentDidUpdate() {
+    if (this.state.search !== this.last_search) this.getGifs();
+    else this.last_search = this.state.search;
+  }
 
-        fetch(api).then(res => res.json()).then(data => this.setState({gifs: data.data}));
-    }
+  getGifs = () => {
+    const api = `http://api.giphy.com/v1/gifs/search?q=${
+      this.state.search
+    }&api_key=${this.state.apiKey}&limit=12`;
 
-    handleInput = (e) => {
-        this.setState({
-            search: e.target.value.split(" ").join("+")
+    fetch(api)
+      .then(res => res.json())
+      .then(data => this.setState({ gifs: data.data }));
+  };
+
+  timeoutFire(that, target) {
+    return function() {
+        that.setState({
+            search: target.value
         });
-    }
+    };
+  }
 
-    render() {
-        return (
-            <div>
-                <input type="text" onChange={this.handleInput}/>
-                {this.state.gifs.length ? <Gallery gifs={this.state.gifs}/> : "Loading..."}
-            </div>
-        );
-    }
+  handleInput = e => {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(this.timeoutFire(this, e.target), 1000);
+  };
+
+  render() {      
+    return (
+      <div>
+        <Search onchange={this.handleInput} />
+        {this.state.gifs.length ? (
+          <Gallery gifs={this.state.gifs} />
+        ) : (
+          <div>"Loading..."</div>
+        )}
+      </div>
+    );
+  }
 }
 
 export default GalleryContainer;

@@ -53,7 +53,7 @@ class GalleryContainer extends Component {
         {this.state.gifs.length ? (
           <Gallery gifs={this.state.gifs} />
         ) : (
-          <div>"Loading..."</div>
+          <div className="loading">"Loading..."</div>
         )}
       </section>
     );

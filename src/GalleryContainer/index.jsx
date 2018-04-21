@@ -11,7 +11,8 @@ class GalleryContainer extends Component {
   state = {
     apiKey: "LouXV5IDYNZ3ozPSjsH3aEvFeUZHB68N",
     gifs: [],
-    search: ""
+    search: "",
+    numGifs: 3
   };
 
   componentDidMount() {
@@ -26,7 +27,7 @@ class GalleryContainer extends Component {
   getGifs = () => {
     const api = `http://api.giphy.com/v1/gifs/search?q=${
       this.state.search
-    }&api_key=${this.state.apiKey}&limit=12`;
+    }&api_key=${this.state.apiKey}&limit=${this.state.numGifs}`;
 
     fetch(api)
       .then(res => res.json())
@@ -46,6 +47,12 @@ class GalleryContainer extends Component {
     this.timeout = setTimeout(this.timeoutFire(this, e.target), 1000);
   };
 
+  updateNumber = e => {
+    this.setState({
+      numGifs: e.target.value
+    });
+  }
+
   render() {      
     return (
       <section className="galleryContainer">
@@ -55,6 +62,7 @@ class GalleryContainer extends Component {
         ) : (
           <div className="loading">"Loading..."</div>
         )}
+        <input type="range" name="gifs_nr" min="3" max="100" value={this.state.numGifs} onChange={this.updateNumber} />
       </section>
     );
   }

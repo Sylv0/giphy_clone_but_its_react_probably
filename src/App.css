@@ -1,9 +1,37 @@
+@keyframes hmmm {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.App {
+    background-color: #CCC;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
 .title {
     text-align: center;
+    padding: 2em 0;
 }
 
 .galleryContainer {
     display: grid;
+    background-color: #ddd;
+    height: 100%;
+}
+
+.loading {
+    text-align: center;
 }
 
 .search {
@@ -15,16 +43,103 @@
     border-width: 8px;
     border-color: cyan;
     background-color: aquamarine;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, calc(100%/3));
     margin: 0 auto;
+}
+
+.gallery video{
+    width: 100%;
+    height: auto;
+    margin: auto;
+    padding: 1em;
+    filter: grayscale(100%);
+    transition: filter .5s ease-in-out;
+    position: unset;
+}
+
+.gallery video:hover {
+    filter: none;
+}
+
+.gallery video.selected {
+    position: fixed;
+    height: 100vh;
+    widows: 100vw;
+    top: 0;
+    z-index: 3;
+    filter: none;
+    background-color: gray;
+}
+
+.gallery video.selected::after {
+    content: '';
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: gray;
+    z-index: 2;
+}
+
+@media (min-width: 1500px){
+    .gallery {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 @media (max-width: 1000px){
     .gallery {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+@media (max-width: 750px){
+    .gallery {
+        grid-template-columns: repeat(1, 1fr);
+        margin: 0;
+    }
+}
+
+.hmmm {
+    position: fixed;
+    top: 1em; right: 1em;
+    font-size: 2em;
+    font-weight: bold;
+    animation-name: hmmm;
+    animation-duration: 500ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: reverse;
+    transform: rotate(0deg);
+    transition: all 500ms linear;
+}
+
+.hmmm:hover {
+    animation: none;
+    transform: rotate(0deg);
+}
+
+.hmmm:hover::after {
+    content: '';
+    position: fixed;
+    right: -1em;
+    top: -1em;
+    height: 100vh;
+    width: 50vw;
+    background-color: #000000AA;
+    background-image: url("./hmmm.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    z-index: 5;
+}
+
+input[type="range"]{
+    position: fixed;
+    top: 0;
+    left: 0;
 }

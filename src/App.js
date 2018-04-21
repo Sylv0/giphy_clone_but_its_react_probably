@@ -11,6 +11,7 @@ class App extends Component {
       <main className="App">
         <Head />
         <GalleryContainer />
+        <div className="hmmm">?</div>
       </main>
     );
   }

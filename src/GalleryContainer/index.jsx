@@ -8,6 +8,8 @@ class GalleryContainer extends Component {
 
   timeout = null;
 
+  updateSearch = false;
+
   state = {
     apiKey: "LouXV5IDYNZ3ozPSjsH3aEvFeUZHB68N",
     gifs: [],
@@ -20,8 +22,10 @@ class GalleryContainer extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.search !== this.last_search) this.getGifs();
-    else this.last_search = this.state.search;
+    if (this.updateSearch) {
+      this.getGifs();
+      this.updateSearch = false;
+    }
   }
 
   getGifs = () => {
@@ -36,9 +40,10 @@ class GalleryContainer extends Component {
 
   timeoutFire(that, target) {
     return function() {
-        that.setState({
-            search: target.value
-        });
+      that.updateSearch = true;
+      that.setState({
+        search: target.value
+      });
     };
   }
 
@@ -48,12 +53,14 @@ class GalleryContainer extends Component {
   };
 
   updateNumber = e => {
+    console.log("Changing number?");
+    this.updateSearch = true;
     this.setState({
       numGifs: e.target.value
     });
-  }
+  };
 
-  render() {      
+  render() {
     return (
       <section className="galleryContainer">
         <Search onchange={this.handleInput} />
@@ -62,7 +69,14 @@ class GalleryContainer extends Component {
         ) : (
           <div className="loading">"Loading..."</div>
         )}
-        <input type="range" name="gifs_nr" min="3" max="100" value={this.state.numGifs} onChange={this.updateNumber} />
+        <input
+          type="range"
+          name="gifs_nr"
+          min="3"
+          max="100"
+          value={this.state.numGifs}
+          onChange={this.updateNumber}
+        />
       </section>
     );
   }

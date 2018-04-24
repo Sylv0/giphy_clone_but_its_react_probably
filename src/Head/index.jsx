@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import logo from './logo.gif';
 
 class Head extends Component {
   render() {
-    return <h1 className="title">Giphy maybe</h1>;
+    return <img src={logo} alt="Giphy Logo" className="title"/>;
   }
 }
 
